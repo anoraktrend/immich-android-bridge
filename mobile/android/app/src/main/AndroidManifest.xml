@@ -20,6 +20,12 @@
   <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
   <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
+  <!-- Bridge access for patched picker apps: granted only to apps signed with the
+       same key (our own builds/patches). See docs/v2-orchestrator.md. -->
+  <permission
+    android:name="app.alextran.immich.permission.BRIDGE"
+    android:protectionLevel="signature" />
+
   <!-- Foreground service permission -->
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
@@ -148,6 +154,13 @@
         <data android:scheme="app.immich" android:pathPrefix="/oauth-callback" />
       </intent-filter>
     </activity>
+    <!-- Immich bridge (v2 orchestrator): read-only config/media for patched apps. -->
+    <provider
+      android:name=".bridge.BridgeProvider"
+      android:authorities="app.alextran.immich.bridge"
+      android:exported="true"
+      android:readPermission="app.alextran.immich.permission.BRIDGE" />
+
     <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to
     generate GeneratedPluginRegistrant.java -->
