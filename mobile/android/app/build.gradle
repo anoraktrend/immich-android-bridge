@@ -86,6 +86,9 @@ flutter {
 }
 
 dependencies {
+  // Bridge: modern SQLite for reading the app's own drift database — the platform
+  // SQLite (3.32 on Android 13) cannot parse its STRICT tables.
+  implementation 'com.github.requery:sqlite-android:3.49.0'
   implementation libs.okhttp
   implementation libs.cronet.embedded
   implementation libs.media3.datasource.okhttp
